@@ -1,5 +1,7 @@
 ---
 name: cognition
+license: MIT
+homepage: https://github.com/zurbrick/cognition
 description: Seven biologically-inspired memory systems for OpenClaw agents. Gives your agent overnight learning (nightly consolidation), metacognition (confidence tracking), prospective memory (future intents), procedural memory (compiled skills), spreading activation (cross-references), knowledge gap detection, and weekly deep reflection. Use when setting up agent memory architecture, implementing long-term memory, adding overnight consolidation, enabling self-improvement, or building cognitive infrastructure. Based on SOAR, ACT-R, Global Workspace Theory, and hippocampal replay research.
 ---
 
