@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Cognition — Install script
-# Creates the full cognitive memory directory structure and template files.
+# Creates the memory directory structure and template files.
 # Usage: bash scripts/install.sh [workspace_path]
 # Default: ~/.openclaw/workspace
 
@@ -11,20 +11,18 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 SKILL_DIR="$(dirname "$SCRIPT_DIR")"
 TEMPLATES="$SKILL_DIR/templates"
 
-echo "🧠 Cognition — Installing cognitive memory architecture"
+echo "🧠 Cognition — Installing practical memory architecture"
 echo "   Workspace: $WORKSPACE"
 echo ""
 
 # Create directories
-dirs=(
-  "memory/procedures"
-  "memory/consolidation"
-  "memory/summaries"
-  "memory/meta"
+for dir in \
+  "memory/procedures" \
+  "memory/consolidation" \
+  "memory/summaries" \
+  "memory/meta" \
   "memory/bank"
-)
-
-for dir in "${dirs[@]}"; do
+do
   if [[ ! -d "$WORKSPACE/$dir" ]]; then
     mkdir -p "$WORKSPACE/$dir"
     echo "  ✅ Created $dir/"
@@ -33,7 +31,7 @@ for dir in "${dirs[@]}"; do
   fi
 done
 
-# Copy templates (only if not already present)
+# Copy templates (non-destructive)
 copy_template() {
   local src="$1"
   local dest="$2"
@@ -56,8 +54,8 @@ echo ""
 echo "🧠 Cognition installed!"
 echo ""
 echo "Next steps:"
-echo "  1. Read the SKILL.md for the 4-phase adoption guide"
-echo "  2. Add the Memory Protocol to your AGENTS.md (see references/protocols.md)"
-echo "  3. Set up the nightly consolidation cron (see references/consolidation-prompt.md)"
-echo "  4. Customize KNOWLEDGE_MAP.md for your domains"
+echo "  1. Read SKILL.md for the 3-tier adoption guide"
+echo "  2. Add the Memory Protocol from references/protocols.md to AGENTS.md"
+echo "  3. Set up nightly consolidation with references/consolidation-prompt.md"
+echo "  4. Treat memory/KNOWLEDGE_MAP.md and cross-references as optional Advanced overlays"
 echo ""

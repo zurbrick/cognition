@@ -1,75 +1,83 @@
-# Weekly Deep Reflection — Cron Prompt
+# Weekly Reflection — Analysis and Recommendations Only
 
 Schedule: `0 4 * * 0` (Sunday 4 AM)
-Recommended model: Any model with reliable tool use
+Recommended model: any model with reliable tool use
 Timeout: 600 seconds
 
 ## Prompt
 
-```
-You are running the Weekly Deep Reflection. This is "deep sleep" — the most thorough cognitive maintenance cycle.
+```text
+You are running the Weekly Reflection.
 
-## Task
-Review the full week and perform deep system maintenance.
+This workflow analyzes the past week and produces recommendations.
+It does **not** directly edit durable memory, procedures, AGENTS.md, or other operating files.
 
-## Steps
+## Goal
+Review the week, identify patterns, and emit proposals humans can approve.
 
-1. **Load the week's daily logs:** Read `memory/YYYY-MM-DD.md` for the last 7 days.
-2. **Load core files:** MEMORY.md, KNOWLEDGE_MAP.md, FUTURE_INTENTS.md, memory/procedures/index.yaml
-3. **Load cross-references:** memory/bank/cross-references.md
-4. **Load gap tracker:** memory/meta/gap_tracker.json
+## Read
+1. `memory/YYYY-MM-DD.md` for the last 7 days
+2. `MEMORY.md` if present
+3. `memory/FUTURE_INTENTS.md` if present
+4. `memory/procedures/index.yaml` if present
+5. `memory/KNOWLEDGE_MAP.md` if present
+6. `memory/bank/cross-references.md` if present
+7. `memory/meta/gap_tracker.json` if present
+8. previous `memory/summaries/YYYY-WNN.md` if present
 
-5. **Weekly Summary:**
-   - Identify recurring themes across the week
-   - Flag growing expertise areas
-   - Flag persistent problems (same issue 3+ days)
-   - Write summary to `memory/summaries/YYYY-WNN.md`
+## Output
+Write a weekly report to:
+`memory/summaries/YYYY-WNN.md`
 
-6. **MEMORY.md Maintenance:**
-   - Check entries against TTL (customize per domain)
-   - Archive expired entries to bank files
-   - Verify index pointers resolve to valid files
-   - Keep under 3K tokens / 12K chars
+If a report already exists, append a new timestamped reflection block instead of overwriting it.
 
-7. **KNOWLEDGE_MAP Recalculation:**
-   - Domains not touched this week: reduce confidence by 0.05
-   - Domains with errors/corrections: reduce by 0.10
-   - Domains actively used successfully: boost by 0.05
-   - Update "Last Verified" dates
+## Required sections
+- Weekly summary
+- Recurring themes
+- Repeated failures / friction
+- Commitment review
+- Procedure review
+- Confidence / gap review
+- Proposed diffs
+- Recommendations requiring human approval
 
-8. **Knowledge Gap Review:**
-   - Read memory/meta/gap_tracker.json
-   - Gaps with 3+ misses: surface as research tasks
-   - Add new gaps discovered this week
+## Proposed diff format
+When suggesting changes, emit proposals like:
+- `Target:` file path
+- `Reason:` why the change is recommended
+- `Evidence:` cite the relevant daily logs or files
+- `Proposed diff:` a small patch, replacement block, or exact text snippet
 
-9. **Procedure Audit:**
-   - Flag procedures below 0.3 success rate
-   - Flag procedures not used in 30+ days
-   - Compile new procedures from the week's novel solutions
+Do not apply the diff yourself.
 
-10. **Cross-Reference Update:**
-    - Add new links discovered this week
-    - Remove links to deleted/archived files
+## Backup rule for any later mutation workflow
+If a separate reviewed workflow chooses to apply a recommendation, it must first create timestamped backups of every file it changes.
 
-11. **FUTURE_INTENTS Cleanup:**
-    - Archive completed intents older than 7 days
-    - Flag overdue intents
+## Analysis rules
+- Prefer pattern detection over one-off noise
+- Do not invent missing evidence
+- No automated confidence decay by default
+- Use coarse confidence bands (🟢 / 🟡 / 🔴) if discussing knowledge quality
+- If evidence is ambiguous, mark the recommendation `[NEEDS_REVIEW]`
 
-12. **Self-Improvement Review:**
-    - Check learnings for patterns recurring 3+ times → recommend promotion to AGENTS.md
-    - Flag rules being consistently ignored
+## Procedure review rules
+- New procedures begin as `draft`
+- Recommend promotion to `reviewed` after human review or 3 successful uses
+- Recommend promotion to `trusted` only after repeated reliable use
+- Flag weak or stale procedures, but do not delete them automatically
 
-13. **State of Knowledge Report:**
-    - Coverage estimate
-    - Improving vs degrading domains
-    - Top 3 gaps to close next week
-    - Specific recommendations
+## Knowledge / gap review rules
+- Surface recurring gaps from `memory/meta/gap_tracker.json`
+- Keep `last_verified` where available
+- Confidence changes require evidence, not vibes
 
 ## Rules
-- Do NOT modify SOUL.md or AGENTS.md directly — recommend only
-- Compare against previous weekly summary if it exists
-- Be honest about what's working and what's theater
+- Do not modify `SOUL.md` or `AGENTS.md` directly
+- Do not directly edit `MEMORY.md`, `memory/FUTURE_INTENTS.md`, `memory/KNOWLEDGE_MAP.md`, or procedures in this workflow
+- Produce analysis + recommendations only
+- If the week was quiet, write a brief report and exit
 
-## Critical: Tool Use Required
-You MUST use the read and write tools. Do NOT describe — execute.
+## Critical: tool use required
+You must use read and write tools.
+Do not describe the work without producing the report.
 ```

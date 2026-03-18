@@ -1,6 +1,9 @@
-# Cognition — Recommended Configuration
+# Cognition — Tier 2 Retrieval Configuration
 
-Add these settings to your `openclaw.json` under `agents.defaults`.
+These settings are **Tier 2 (advanced)** recommendations for users running hybrid retrieval.
+They are not required for Tier 0 manual retrieval or Tier 1 keyword search.
+
+Add these settings to your `openclaw.json` under `agents.defaults` if you want higher-quality retrieval.
 
 ## Compaction & Memory Flush
 
@@ -15,10 +18,6 @@ Add these settings to your `openclaw.json` under `agents.defaults`.
   }
 }
 ```
-
-**Why 40K:** Default 20K is too tight for agents with heavy tool use. 40K gives enough headroom for the memory flush to complete before compaction fires.
-
-**softThresholdTokens:** 4K is the guide recommendation. 10K is more conservative (triggers flush earlier). Both work.
 
 ## Hybrid Search
 
@@ -49,12 +48,6 @@ Add these settings to your `openclaw.json` under `agents.defaults`.
 }
 ```
 
-**vectorWeight 0.7 / textWeight 0.3:** Semantic similarity dominates, keyword matching catches exact terms. Proven ratio from OpenClaw's own implementation.
-
-**MMR lambda 0.7:** Balanced diversity. Prevents 8 results that all say the same thing.
-
-**temporalDecay halfLifeDays 30:** Recent memories score higher. Evergreen files (MEMORY.md, non-dated files) are never decayed.
-
 ## Context Pruning
 
 ```json
@@ -64,4 +57,9 @@ Add these settings to your `openclaw.json` under `agents.defaults`.
 }
 ```
 
-**Note:** 5m is the guide default. Longer TTLs (e.g., 4h) keep tool results in context longer — useful if your agent frequently re-references recent results, but consumes more context.
+## Notes
+
+- `vectorWeight 0.7 / textWeight 0.3` is a practical default, not gospel.
+- MMR helps diversify near-duplicate search hits.
+- Temporal decay is a Tier 2 optimization; evergreen files may need custom handling.
+- If you are not running embeddings, skip this file and use the Retrieval Tiers in `SKILL.md`.
